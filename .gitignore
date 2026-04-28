@@ -1,0 +1,22 @@
+.venv/
+.ipynb_checkpoints/
+
+# Local archives / notebooks
+ML.rar
+Untitled*.ipynb
+
+# Raw and heavy generated data
+data_raw/
+results/
+data_processed/*
+!data_processed/brfss_after_preprocessing_sample.csv
+!data_processed/brfss_before_preprocessing_sample.csv
+!data_processed/common_cols.csv
+
+# Data warehouse artifacts
+dw_project/data/*.sqlite
+
+# Python caches
+__pycache__/
+*.pyc
+desktop.ini
