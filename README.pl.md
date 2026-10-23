@@ -8,6 +8,14 @@ Projekt pokazuje warstwę analityczną uzupełniającą proces uczenia maszynowe
 
 [English version](README.md)
 
+## Podgląd panelu
+
+![Panel BRFSS z wyborem lat, wskaźnikami próbki i rocznym trendem target rate](docs/assets/dashboard-overview.png)
+
+Rzeczywisty widok aplikacji uruchomionej na dołączonej próbce 5000 rekordów z lat 2022–2024. Wybrane dane obejmują 355 rekordów z dodatnią flagą target, co daje nieważony wskaźnik 7,1%.
+
+[Zobacz cały panel, wraz z porównaniami stanów i grup demograficznych](docs/assets/dashboard.png).
+
 ## Co realizuje projekt
 
 - **Proces ETL:** odczyt przygotowanego pliku CSV, standaryzacja kodów, obliczanie miar i budowa lokalnej hurtowni SQLite.
@@ -115,6 +123,8 @@ Otwórz adres lokalny wskazany przez Streamlit. Interfejs panelu jest w języku 
 
 Miary obejmują licznik respondentów równy `1` dla każdego rekordu, BMI obliczane jako `_BMI5 / 100`, liczbę dni złego zdrowia fizycznego i liczbę dzieci. Część dodatkowych odpowiedzi pozostaje kodami w tabeli faktów.
 
+[Zobacz logiczny schemat gwiazdy i definicje pól](docs/data-model.md).
+
 `create_schema.sql` opisuje docelowy schemat, klucze i indeksy. Obecny loader wykorzystuje jednak pandas `to_sql(..., if_exists="replace")`, więc utworzone w ten sposób tabele nie zachowują ograniczeń i indeksów zadeklarowanych w pliku SQL.
 
 ## Widoki raportowe i wskaźniki
@@ -179,6 +189,11 @@ Skrypty preprocessingu w katalogu głównym są narzędziami roboczymi z lokalny
 med-warehouse/
 ├── README.md
 ├── README.pl.md
+├── docs/
+│   ├── data-model.md
+│   └── assets/
+│       ├── dashboard-overview.png
+│       └── dashboard.png
 ├── data_processed/
 │   ├── brfss_before_preprocessing_sample.csv
 │   ├── brfss_after_preprocessing_sample.csv

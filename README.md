@@ -8,6 +8,14 @@ The project demonstrates the analytical layer that complements a machine learnin
 
 [Polska wersja opisu](README.pl.md)
 
+## Dashboard preview
+
+![BRFSS dashboard showing the year filter, sample metrics and annual target-rate trend](docs/assets/dashboard-overview.png)
+
+Actual application output using the included 5,000-row sample from 2022–2024. The selected records contain 355 target-positive responses, giving an unweighted target rate of 7.1%.
+
+[View the complete dashboard, including state and demographic comparisons](docs/assets/dashboard.png).
+
 ## What the project delivers
 
 - **An ETL pipeline** that loads a prepared CSV, standardises coded fields, derives measures and builds a local SQLite warehouse.
@@ -115,6 +123,8 @@ Open the local address printed by Streamlit. The current dashboard interface is 
 
 Measures include a respondent count of `1` per record, BMI derived from `_BMI5 / 100`, physically unhealthy days, and the number of children. Some additional survey attributes remain coded fields in the fact table.
 
+[Explore the logical star-schema diagram and field definitions](docs/data-model.md).
+
 `create_schema.sql` defines the intended schema, keys and indexes. The current loader uses pandas `to_sql(..., if_exists="replace")`, so the resulting tables do not retain the constraints and indexes declared in that SQL file.
 
 ## Reporting views and metrics
@@ -179,6 +189,11 @@ The root preprocessing scripts are development utilities: they contain local inp
 med-warehouse/
 ├── README.md
 ├── README.pl.md
+├── docs/
+│   ├── data-model.md
+│   └── assets/
+│       ├── dashboard-overview.png
+│       └── dashboard.png
 ├── data_processed/
 │   ├── brfss_before_preprocessing_sample.csv
 │   ├── brfss_after_preprocessing_sample.csv
