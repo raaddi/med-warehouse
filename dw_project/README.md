@@ -1,71 +1,17 @@
-# BRFSS Data Warehouse Project
+# Med Warehouse: warehouse and dashboard
 
-Projekt rozszerza istniejący projekt ML o warstwę hurtowni danych pod raportowanie biznesowe.
+This directory contains the ETL pipeline, SQL definitions and Streamlit application.
 
-## Co jest w projekcie
+See the repository documentation for the project overview, data model, metric definitions, limitations and complete setup instructions:
 
-- `etl/build_warehouse.py` - pipeline ETL (CSV -> staging -> model gwiazdy -> data marts)
-- `sql/create_schema.sql` - definicje tabel (staging + wymiary + tabela faktów)
-- `sql/create_marts.sql` - widoki agregujące pod dashboard
-- `dashboard/app.py` - dashboard Streamlit
-- `data/brfss_dw.sqlite` - plik bazy tworzony po ETL
+- [English documentation](../README.md)
+- [Dokumentacja po polsku](../README.pl.md)
 
-## Dlaczego hurtownia, skoro jest baza relacyjna
+After preparing the input CSV as described there, you can run the following from this directory:
 
-- Baza operacyjna przechowuje dane do przetwarzania i modelowania.
-- Hurtownia ma strukturę pod analizę biznesową (model gwiazdy).
-- Dzięki temu raporty agregujące są prostsze i szybsze (KPI, trendy, porównania segmentów).
-
-## Model danych (gwiazda)
-
-- Tabela faktów: `fact_health_survey`
-- Wymiary:
-  - `dim_year`
-  - `dim_state`
-  - `dim_age_group`
-  - `dim_sex`
-  - `dim_education`
-  - `dim_income`
-  - `dim_employment`
-  - `dim_urban`
-
-## Uruchomienie ETL
-
-Z katalogu `dw_project`:
-
-```powershell
-python .\etl\build_warehouse.py
+```bash
+python etl/build_warehouse.py
+python -m streamlit run dashboard/app.py
 ```
 
-albo:
-
-```powershell
-.\run_etl.ps1
-```
-
-Po zakończeniu powstaje baza:
-
-`dw_project/data/brfss_dw.sqlite`
-
-## Uruchomienie dashboardu
-
-Z katalogu `dw_project`:
-
-```powershell
-pip install -r .\requirements.txt
-streamlit run .\dashboard\app.py
-```
-
-## Raporty agregujące (data marts)
-
-- `vw_kpi_by_year` - KPI roczne: liczba respondentów, target count, target rate, średnie miary
-- `vw_target_by_state` - target rate wg stanów i lat
-- `vw_target_by_age_sex` - target rate wg wieku i płci
-
-## Co pokazać na zaliczeniu
-
-1. ETL: zasilenie hurtowni z pliku wejściowego.
-2. Schemat: tabela faktów + wymiary (star schema).
-3. SQL agregujący: widoki `vw_*`.
-4. Dashboard: KPI + trendy + segmentacja.
-5. Wniosek biznesowy: które grupy mają najwyższy target rate.
+The generated database is `data/brfss_dw.sqlite`, relative to this directory. Each ETL run rebuilds the warehouse tables and views.
